@@ -1,0 +1,16 @@
+# Zephyr / west build output
+build/
+build-*/
+twister-out*/
+
+# Editor / tooling
+.cache/
+.vscode/
+.claude/
+compile_commands.json
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/

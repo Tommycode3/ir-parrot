@@ -1,0 +1,17 @@
+&pinctrl {
+	/* IR carrier: PWM0 channel 0 -> P0.31 (DAT of the IR transmitter module). */
+	pwm0_default: pwm0_default {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 0, 31)>;
+			/* The module has no transistor: DAT drives the IR LED directly. */
+			nordic,drive-mode = <NRF_DRIVE_H0H1>;
+		};
+	};
+
+	pwm0_sleep: pwm0_sleep {
+		group1 {
+			psels = <NRF_PSEL(PWM_OUT0, 0, 31)>;
+			low-power-enable;
+		};
+	};
+};

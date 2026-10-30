@@ -1,0 +1,74 @@
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include "nice_nano-pinctrl.dtsi"
+
+/ {
+	model = "nice!nano (compatible)";
+	compatible = "nice,nano";
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &code_partition;
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&uicr {
+	gpio-as-nreset;
+};
+
+&pwm0 {
+	status = "okay";
+	pinctrl-0 = <&pwm0_default>;
+	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&flash0 {
+	/*
+	 * Layout for the Adafruit nRF52 bootloader with NO SoftDevice
+	 * (INFO_UF2.TXT: "SoftDevice: not found"): the bootloader then jumps
+	 * to MBR_SIZE = 0x1000. Bootloader occupies the last 48 KB of flash.
+	 */
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		mbr_partition: partition@0 {
+			label = "mbr";
+			reg = <0x00000000 0x00001000>;
+		};
+
+		code_partition: partition@1000 {
+			label = "code_partition";
+			reg = <0x00001000 0x000eb000>;
+		};
+
+		storage_partition: partition@ec000 {
+			label = "storage";
+			reg = <0x000ec000 0x00008000>;
+		};
+
+		boot_partition: partition@f4000 {
+			label = "adafruit_boot";
+			reg = <0x000f4000 0x0000c000>;
+		};
+	};
+};

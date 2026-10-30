@@ -1,0 +1,14 @@
+identifier: nice_nano
+name: nice!nano (compatible)
+type: mcu
+arch: arm
+ram: 256
+flash: 792
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - ble
+  - usb_device
+  - gpio
+  - pwm
